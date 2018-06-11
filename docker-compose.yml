@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  jsonkeeper:
+    build: ./JSONkeeper
+    ports:
+      - '8001:8000'
+
+  canvasindexer:
+    build: ./Canvas-Indexer
+    ports:
+      - '8002:8000'
