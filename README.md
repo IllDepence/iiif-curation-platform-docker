@@ -1,4 +1,4 @@
-Docker setup for running [JSONkeeper](https://github.com/IllDepence/JSONkeeper) in combination with [Canvas Indexer](https://github.com/IllDepence/Canvas-Indexer). (Plan is to also add frontend components to the bundle.)
+Docker setup for running all parts of the [IIIF Curation Platform](http://codh.rois.ac.jp/iiif-curation-platform/).
 
 ### USAGE
 
