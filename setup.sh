@@ -13,12 +13,12 @@ rm -rf IIIFCurationViewer
 rm -rf IIIFCurationFinder
 cp -r cv/IIIFCurationViewer .
 cp -r cf/IIIFCurationFinder .
-sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: 'http:\/\/jsonkeeper:8000\/api'/" IIIFCurationViewer/index.js
-sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: 'http:\/\/jsonkeeper:8000\/api'/" IIIFCurationFinder/index.js
-sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: 'http:\/\/curationviewer'/" IIIFCurationFinder/index.js
-sed -i -E "s/searchEndpointUrl: '.+'/searchEndpointUrl: 'http:\/\/canvasindexer\/api'/" IIIFCurationFinder/index.js
-sed -i -E "s/facetsEndpointUrl: '.+'/searchEndpointUrl: 'http:\/\/canvasindexer\/facets'/" IIIFCurationFinder/index.js
-sed -i -E "s/redirectUrl: '.+'/redirectUrl: 'http:\/\/curationviewer'/" IIIFCurationFinder/exportJsonKeeper.js
+sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: 'http:\/\/127.0.0.1:8001\/api'/" IIIFCurationViewer/index.js
+sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: 'http:\/\/127.0.0.1:8001\/api'/" IIIFCurationFinder/index.js
+sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: 'http:\/\/127.0.0.1:8081'/" IIIFCurationFinder/index.js
+sed -i -E "s/searchEndpointUrl: '.+'/searchEndpointUrl: 'http:\/\/127.0.0.1:8002\/api'/" IIIFCurationFinder/index.js
+sed -i -E "s/facetsEndpointUrl: '.+'/facetsEndpointUrl: 'http:\/\/127.0.0.1:8002\/facets'/" IIIFCurationFinder/index.js
+sed -i -E "s/redirectUrl: '.+'/redirectUrl: 'http:\/\/127.0.0.1:8081'/" IIIFCurationFinder/exportJsonKeeper.js
 cp -v cv/.dockerignore cv/Dockerfile IIIFCurationViewer
 cp -v cf/.dockerignore cf/Dockerfile IIIFCurationFinder
 
