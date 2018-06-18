@@ -1,12 +1,28 @@
 #!/bin/bash
 
+# externalurl=http://127.0.0.1
+#
+# NOTE: services are expected to be accessible at
+# - JSONkeeper: <externalurl>/curation
+# - Canvas Indexer: <externalurl>/ci
+# - Curation Finder: <externalurl>/search
+# - Curation Viewer: <externalurl>/view
+# from outside (web/intranet/...)
+# and will be exposed by docker at
+# - JSONkeeper: http://127.0.0.1:8001
+# - Canvas Indexer: http://127.0.0.1:8002
+# - Curation Finder: http://127.0.0.1:8003
+# - Curation Viewer: http://127.0.0.1:8004
+#
+# exturlexp="${externalurl//\//\\/}"
+
 # Jk and CI
 rm -rf JSONkeeper
 rm -rf Canvas-Indexer
 git clone https://github.com/IllDepence/JSONkeeper.git
 git clone https://github.com/IllDepence/Canvas-Indexer.git
 cp -v jk/.dockerignore jk/Dockerfile jk/gunicorn_config.py jk/config.ini JSONkeeper
-cp -v ci/.dockerignore ci/Dockerfile ci/gunicorn_config.py ci/config.ini Canvas-Indexer
+cp -v ci/.dockerignore ci/Dockerfile ci/gunicorn_config.py ci/config.ini ci/log.txt Canvas-Indexer
 
 # CV and CF
 rm -rf IIIFCurationViewer
@@ -22,19 +38,4 @@ sed -i -E "s/redirectUrl: '.+'/redirectUrl: 'http:\/\/127.0.0.1:8081'/" IIIFCura
 cp -v cv/.dockerignore cv/Dockerfile IIIFCurationViewer
 cp -v cf/.dockerignore cf/Dockerfile IIIFCurationFinder
 
-cic=`docker ps -a -q -f name=curationframeworkbackend_canvasindexer_1`
-jkc=`docker ps -a -q -f name=curationframeworkbackend_jsonkeeper_1`
-cvc=`docker ps -a -q -f name=curationframeworkbackend_curationviewer_1`
-cfc=`docker ps -a -q -f name=curationframeworkbackend_curationfinder_1`
-if [ ! -z "$cic" -a "$cic" != "" ]; then
-    docker container rm "$cic"
-fi
-if [ ! -z "$jkc" -a "$jkc" != "" ]; then
-    docker container rm "$jkc"
-fi
-if [ ! -z "$cvc" -a "$cvc" != "" ]; then
-    docker container rm "$cvc"
-fi
-if [ ! -z "$cfc" -a "$cfc" != "" ]; then
-    docker container rm "$cfc"
-fi
+./reset.sh

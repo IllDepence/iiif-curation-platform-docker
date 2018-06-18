@@ -5,11 +5,16 @@ services:
     build: ./JSONkeeper
     ports:
       - '8001:8000'
+    volumes:
+      - ./JSONkeeper/config.ini:/jsonkeeper/config.ini
 
   canvasindexer:
     build: ./Canvas-Indexer
     ports:
       - '8002:8000'
+    volumes:
+      - ./Canvas-Indexer/config.ini:/canvasindexer/config.ini
+      - ./Canvas-Indexer/log.txt:/canvasindexer/log.txt
 
   curationviewer:
     build: ./IIIFCurationViewer
