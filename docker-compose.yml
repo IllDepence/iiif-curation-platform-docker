@@ -16,12 +16,12 @@ services:
       - ./Canvas-Indexer/config.ini:/canvasindexer/config.ini
       - ./Canvas-Indexer/log.txt:/canvasindexer/log.txt
 
-  curationviewer:
-    build: ./IIIFCurationViewer
-    ports:
-      - '8081:80'
-
   curationfinder:
     build: ./IIIFCurationFinder
     ports:
-      - '8082:80'
+      - '8003:80'
+
+  curationviewer:
+    build: ./IIIFCurationViewer
+    ports:
+      - '8004:80'
