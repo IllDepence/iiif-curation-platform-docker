@@ -1,18 +1,20 @@
 #!/bin/bash
 
+# Configurate the external URL here (without trailing slash)
 externalurl=http://136.187.82.133
 
 # NOTE: services are expected to be accessible at
-# - JSONkeeper: <externalurl>/curation
-# - Canvas Indexer: <externalurl>/ci
-# - Curation Finder: <externalurl>/search
-# - Curation Viewer: <externalurl>/view
+# - JSONkeeper: <externalurl>/curation/
+# - Canvas Indexer: <externalurl>/ci/
+# - Curation Finder: <externalurl>/search/
+# - Curation Viewer: <externalurl>/view/
 # from outside (web/intranet/...)
 # and will be exposed by docker at
 # - JSONkeeper: http://127.0.0.1:8001
 # - Canvas Indexer: http://127.0.0.1:8002
 # - Curation Finder: http://127.0.0.1:8003
 # - Curation Viewer: http://127.0.0.1:8004
+# see README.md for a proxy configuration examples
 
 exturlesc="${externalurl//\//\\/}"
 
