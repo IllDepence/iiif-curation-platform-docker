@@ -6,8 +6,8 @@ externalurl=http://136.187.82.133
 # NOTE: services are expected to be accessible at
 # - JSONkeeper: <externalurl>/curation/
 # - Canvas Indexer: <externalurl>/ci/
-# - Curation Finder: <externalurl>/search/
-# - Curation Viewer: <externalurl>/view/
+# - Curation Finder: <externalurl>/finder/
+# - Curation Viewer: <externalurl>/viewer/
 # from outside (web/intranet/...)
 # and will be exposed by docker at
 # - JSONkeeper: http://127.0.0.1:8001
@@ -37,9 +37,9 @@ cp -v cv/.dockerignore cv/Dockerfile IIIFCurationViewer
 cp -v cf/.dockerignore cf/Dockerfile IIIFCurationFinder
 sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/api'/" IIIFCurationViewer/index.js
 sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/api'/" IIIFCurationFinder/index.js
-sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: '$exturlesc\/view\/'/" IIIFCurationFinder/index.js
+sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: '$exturlesc\/viewer\/'/" IIIFCurationFinder/index.js
 sed -i -E "s/searchEndpointUrl: '.+'/searchEndpointUrl: '$exturlesc\/ci\/api'/" IIIFCurationFinder/index.js
 sed -i -E "s/facetsEndpointUrl: '.+'/facetsEndpointUrl: '$exturlesc\/ci\/facets'/" IIIFCurationFinder/index.js
-sed -i -E "s/redirectUrl: '.+'/redirectUrl: '$exturlesc\/view\/'/" IIIFCurationFinder/exportJsonKeeper.js
+sed -i -E "s/redirectUrl: '.+'/redirectUrl: '$exturlesc\/viewer\/'/" IIIFCurationFinder/exportJsonKeeper.js
 
 ./reset.sh
