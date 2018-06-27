@@ -3,6 +3,9 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
 ### First use
 
 * in setup.sh, set the value of `externalurl`
+* *if* Firebase is to be used
+    * place a file `firebase-adminsdk.json` in jk/
+    * uncomment the firebase config section in jk/config.ini
 * `$ ./setup.sh`
 * `$ docker-compose up --build`
 

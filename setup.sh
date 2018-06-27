@@ -23,8 +23,8 @@ rm -rf JSONkeeper
 rm -rf Canvas-Indexer
 git clone https://github.com/IllDepence/JSONkeeper.git
 git clone https://github.com/IllDepence/Canvas-Indexer.git
-cp -v jk/.dockerignore jk/Dockerfile jk/gunicorn_config.py jk/config.ini JSONkeeper
-cp -v ci/.dockerignore ci/Dockerfile ci/gunicorn_config.py ci/config.ini ci/log.txt Canvas-Indexer
+cp -v jk/.dockerignore jk/* JSONkeeper
+cp -v ci/.dockerignore ci/* Canvas-Indexer
 sed -i -E "s/server_url =.+/server_url = $exturlesc\/curation/" JSONkeeper/config.ini
 sed -i -E "s/as_sources =.+/as_sources = $exturlesc\/curation\/as\/collection.json/" Canvas-Indexer/config.ini
 
