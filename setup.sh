@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configurate the external URL here (without trailing slash)
-externalurl=http://136.187.82.133
+externalurl=http://136.187.82.133/cp
 
 # NOTE: services are expected to be accessible at
 # - JSONkeeper: <externalurl>/curation/

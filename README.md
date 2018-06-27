@@ -6,6 +6,7 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
 * *if* Firebase is to be used
     * place a file `firebase-adminsdk.json` in jk/
     * uncomment the firebase config section in jk/config.ini
+    * configure the IIIF Curation Viewer and Finder's authFirebase.js accordingly
 * `$ ./setup.sh`
 * `$ docker-compose up --build`
 
@@ -17,16 +18,18 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
 
 ### Proxy config examples
 
+Let's assume you want to serve the bundle on `<your_host>/cp/...` and have therefore set `externalurl` in setup.sh to `<your_host>/cp` (no trailing slash). Proxy configurations then may look as follows:
+
 #### Apache
 
-        ProxyPassMatch "^/curation/(.*)" "http://127.0.0.1:8001/$1"
-        ProxyPassReverse "^/curation/(.*)" "http://127.0.0.1:8001/$1"
-        ProxyPassMatch "^/ci/(.*)" "http://127.0.0.1:8002/$1"
-        ProxyPassReverse "^/ci/(.*)" "http://127.0.0.1:8002/$1"
-        ProxyPassMatch "^/finder/(.*)" "http://127.0.0.1:8003/$1"
-        ProxyPassReverse "^/finder/(.*)" "http://127.0.0.1:8003/$1"
-        ProxyPassMatch "^/viewer/(.*)" "http://127.0.0.1:8004/$1"
-        ProxyPassReverse "^/viewer/(.*)" "http://127.0.0.1:8004/$1"
+        ProxyPassMatch "^/cp/curation/(.*)" "http://127.0.0.1:8001/$1"
+        ProxyPassReverse "^/cp/curation/(.*)" "http://127.0.0.1:8001/$1"
+        ProxyPassMatch "^/cp/ci/(.*)" "http://127.0.0.1:8002/$1"
+        ProxyPassReverse "^/cp/ci/(.*)" "http://127.0.0.1:8002/$1"
+        ProxyPassMatch "^/cp/finder/(.*)" "http://127.0.0.1:8003/$1"
+        ProxyPassReverse "^/cp/finder/(.*)" "http://127.0.0.1:8003/$1"
+        ProxyPassMatch "^/cp/viewer/(.*)" "http://127.0.0.1:8004/$1"
+        ProxyPassReverse "^/cp/viewer/(.*)" "http://127.0.0.1:8004/$1"
 
 ##### Restricting access
 
@@ -39,27 +42,27 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
 
 ‌
 
-        <Proxy *>
-        Authtype Basic
-        Authname "Password Required"
-        AuthUserFile <path_to_htpasswd_file>
-        Require valid-user
-        Deny from all
-        Allow from <subnet_value>
-        Satisfy any
-        </Proxy>
+        <Location /cp/>
+            Authtype Basic
+            Authname "Password Required"
+            AuthUserFile <path_to_htpasswd_file>
+            Require valid-user
+            Deny from all
+            Allow from <subnet_value>
+            Satisfy any
+        </Location>
 
 #### Nginx
 
-        location /curation/ {
+        location /cp/curation/ {
             proxy_pass http://127.0.0.1:8001/;
         }
-        location /ci/ {
+        location /cp/ci/ {
             proxy_pass http://127.0.0.1:8002/;
         }
-        location /finder/ {
+        location /cp/finder/ {
             proxy_pass http://127.0.0.1:8003/;
         }
-        location /viewer/ {
+        location /cp/viewer/ {
             proxy_pass http://127.0.0.1:8004/;
         }
