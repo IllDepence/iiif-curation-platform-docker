@@ -7,6 +7,7 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
     * place a file `firebase-adminsdk.json` in jk/
     * uncomment the firebase config section in jk/config.ini
     * configure the IIIF Curation Viewer and Finder's authFirebase.js accordingly
+    * add the host part of `externalurl` to the authorized domains in your Firebase console
 * `$ ./setup.sh`
 * `$ docker-compose up --build`
 

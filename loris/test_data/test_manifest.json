@@ -1,0 +1,40 @@
+{
+  "@type" : "sc:Manifest",
+  "@context" : "http://iiif.io/api/presentation/2/context.json",
+  "@id" : "JSONkeeper's gonna change this",
+  "label" : "outside NII",
+  "description" : "picture taken outside NII",
+  "attribution" : "Tarek Saier",
+  "sequences" : [ {
+    "@id" : "fd930f65-64da-422b-9133-08b080186449",
+    "@type" : "sc:Sequence",
+    "label" : "default sequence",
+    "viewingHint" : "individuals",
+    "canvases" : [ {
+      "images" : [ {
+        "resource" : {
+          "@type" : "dctypes:Image",
+          "service" : {
+            "profile" : "http://iiif.io/api/image/2/level2.json",
+            "@id" : "http://136.187.82.133/cp/image/test.jpg",
+            "@context" : "http://iiif.io/api/image/2/context.json"
+          },
+          "format" : "image/jpeg",
+          "width" : 1000,
+          "@id" : "http://136.187.82.133/cp/image/test.jpg/full/full/0/default.jpg",
+          "label" : "outside NII",
+          "height" : 563
+        },
+        "@type" : "oa:Annotation",
+        "motivation" : "sc:painting",
+        "@id" : "http://136.187.82.133/cp/image/test.jpg",
+        "on" : "f95f9279-d5c1-40c9-a53b-9ea72ae3aa88"
+      } ],
+      "@type" : "sc:Canvas",
+      "width" : 1000,
+      "@id" : "f95f9279-d5c1-40c9-a53b-9ea72ae3aa88",
+      "label" : "outside NII",
+      "height" : 563
+    }]
+  } ]
+}

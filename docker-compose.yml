@@ -25,3 +25,9 @@ services:
     build: ./IIIFCurationViewer
     ports:
       - '8004:80'
+  loris:
+    image: 'lorisimageserver/loris'
+    ports:
+      - '8005:5004'
+    volumes:
+      - ./loris/images:/opt/loris/tests/img
