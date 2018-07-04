@@ -34,12 +34,14 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...` and have there
 
 ##### Restricting access
 
-* run `docker network inspect curationframeworkbackend_default` while the containers are running
+* run `docker network inspect curation-framework-docker`<sup>[1]</sup> while the containers are running
 * note the value of `Subnet` (for the network, not a single container)
 * if not already existing, generate a htpasswd file (e.g.: `sudo htpasswd -c /etc/apache2/.htpasswd curt`)
 * configure Apache as shown below
     * replace `<subnet_value>` with the value you got in the first step
     * replace `<path_to_htpasswd_file>` with the path to your htpasswd file
+
+[1] the network name may differ if you renamed the folder in which this repository is placed
 
 ‌
 
