@@ -6,3 +6,5 @@ IIIFCurationFinder
 cv/IIIFCurationViewer
 cf/IIIFCurationFinder
 jk/firebase-adminsdk.json
+cv/authFirebase.js
+cf/authFirebase.js
