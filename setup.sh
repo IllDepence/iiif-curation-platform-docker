@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Configurate the external URL here (without trailing slash)
+# Configurate the external URL (without trailing slash) and start port number here
 externalurl=http://136.187.82.133/cp
 
+start_port=9001
 
 jk_git_url="https://github.com/IllDepence/JSONkeeper.git"
 ci_git_url="https://github.com/IllDepence/Canvas-Indexer.git"
@@ -16,10 +17,11 @@ cf_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationFinder_20180710
 # - Curation Viewer: <externalurl>/viewer/
 # from outside (web/intranet/...)
 # and will be exposed by docker at
-# - JSONkeeper: http://127.0.0.1:8001
-# - Canvas Indexer: http://127.0.0.1:8002
-# - Curation Finder: http://127.0.0.1:8003
-# - Curation Viewer: http://127.0.0.1:8004
+# - JSONkeeper: http://127.0.0.1:<start_port>
+# - Canvas Indexer: http://127.0.0.1:<start_port+1>
+# - Curation Finder: http://127.0.0.1:<start_port+2>
+# - Curation Viewer: http://127.0.0.1:<start_port+3>
+# - Loris: http://127.0.0.1:<start_port+4>
 # see README.md for a proxy configuration examples
 
 exturlesc="${externalurl//\//\\/}"
@@ -62,5 +64,12 @@ sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: '$exturlesc\/viewer\/'/"
 sed -i -E "s/searchEndpointUrl: '.+'/searchEndpointUrl: '$exturlesc\/ci\/api'/" IIIFCurationFinder/index.js
 sed -i -E "s/facetsEndpointUrl: '.+'/facetsEndpointUrl: '$exturlesc\/ci\/facets'/" IIIFCurationFinder/index.js
 sed -i -E "s/redirectUrl: '.+'/redirectUrl: '$exturlesc\/viewer\/'/" IIIFCurationFinder/exportJsonKeeper.js
+
+cp docker-compose.yml.dist docker-compose.yml
+sed -i -E "s/jkport/$((start_port + 0))/" docker-compose.yml
+sed -i -E "s/ciport/$((start_port + 1))/" docker-compose.yml
+sed -i -E "s/cfport/$((start_port + 2))/" docker-compose.yml
+sed -i -E "s/cvport/$((start_port + 3))/" docker-compose.yml
+sed -i -E "s/lport/$((start_port + 4))/" docker-compose.yml
 
 ./reset.sh

@@ -4,14 +4,14 @@ services:
   jsonkeeper:
     build: ./JSONkeeper
     ports:
-      - '8001:8000'
+      - 'jkport:8000'
     volumes:
       - ./JSONkeeper/config.ini:/jsonkeeper/config.ini
 
   canvasindexer:
     build: ./Canvas-Indexer
     ports:
-      - '8002:8000'
+      - 'ciport:8000'
     volumes:
       - ./Canvas-Indexer/config.ini:/canvasindexer/config.ini
       - ./Canvas-Indexer/log.txt:/canvasindexer/log.txt
@@ -19,15 +19,15 @@ services:
   curationfinder:
     build: ./IIIFCurationFinder
     ports:
-      - '8003:80'
+      - 'cfport:80'
 
   curationviewer:
     build: ./IIIFCurationViewer
     ports:
-      - '8004:80'
+      - 'cvport:80'
   loris:
     image: 'lorisimageserver/loris'
     ports:
-      - '8005:5004'
+      - 'lport:5004'
     volumes:
       - ./loris/images:/opt/loris/tests/img
