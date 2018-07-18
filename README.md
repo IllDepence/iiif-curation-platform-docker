@@ -25,8 +25,8 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...`, have therefor
 
         ProxyPassMatch "^/cp/curation/(.*)" "http://127.0.0.1:8001/$1"
         ProxyPassReverse "^/cp/curation/(.*)" "http://127.0.0.1:8001/$1"
-        ProxyPassMatch "^/cp/ci/(.*)" "http://127.0.0.1:8002/$1"
-        ProxyPassReverse "^/cp/ci/(.*)" "http://127.0.0.1:8002/$1"
+        ProxyPassMatch "^/cp/index/(.*)" "http://127.0.0.1:8002/$1"
+        ProxyPassReverse "^/cp/index/(.*)" "http://127.0.0.1:8002/$1"
         ProxyPassMatch "^/cp/viewer/(.*)" "http://127.0.0.1:8003/$1"
         ProxyPassReverse "^/cp/viewer/(.*)" "http://127.0.0.1:8003/$1"
         ProxyPassMatch "^/cp/finder/(.*)" "http://127.0.0.1:8004/$1"
@@ -66,7 +66,7 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...`, have therefor
         location /cp/curation/ {
             proxy_pass http://127.0.0.1:8001/;
         }
-        location /cp/ci/ {
+        location /cp/index/ {
             proxy_pass http://127.0.0.1:8002/;
         }
         location /cp/viewer/ {

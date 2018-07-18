@@ -15,7 +15,7 @@ ce_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationEditor_20180712
 
 # NOTE: services are expected to be accessible at
 # - JSONkeeper: <externalurl>/curation/
-# - Canvas Indexer: <externalurl>/ci/
+# - Canvas Indexer: <externalurl>/index/
 # - Curation Viewer: <externalurl>/viewer/
 # - Curation Finder: <externalurl>/finder/
 # - Curation Manager: <externalurl>/manager/
@@ -70,8 +70,8 @@ cp -v cf/.dockerignore cf/* IIIFCurationFinder
 sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/api'/" IIIFCurationViewer/index.js
 sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/api'/" IIIFCurationFinder/index.js
 sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: '$exturlesc\/viewer\/'/" IIIFCurationFinder/index.js
-sed -i -E "s/searchEndpointUrl: '.+'/searchEndpointUrl: '$exturlesc\/ci\/api'/" IIIFCurationFinder/index.js
-sed -i -E "s/facetsEndpointUrl: '.+'/facetsEndpointUrl: '$exturlesc\/ci\/facets'/" IIIFCurationFinder/index.js
+sed -i -E "s/searchEndpointUrl: '.+'/searchEndpointUrl: '$exturlesc\/index\/api'/" IIIFCurationFinder/index.js
+sed -i -E "s/facetsEndpointUrl: '.+'/facetsEndpointUrl: '$exturlesc\/index\/facets'/" IIIFCurationFinder/index.js
 sed -i -E "s/redirectUrl: '.+'/redirectUrl: '$exturlesc\/viewer\/'/" IIIFCurationFinder/exportJsonKeeper.js
 
 # - - - - - CM and CE - - - - -
