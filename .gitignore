@@ -3,9 +3,13 @@ Canvas-Indexer
 JSONkeeper
 IIIFCurationViewer
 IIIFCurationFinder
+IIIFCurationManager
+IIIFCurationEditor
 cv/IIIFCurationViewer
 cf/IIIFCurationFinder
 jk/firebase-adminsdk.json
 cv/authFirebase.js
 cf/authFirebase.js
+cm/authFirebase.js
+ce/authFirebase.js
 docker-compose.yml

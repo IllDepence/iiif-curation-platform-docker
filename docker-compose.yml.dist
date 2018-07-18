@@ -25,6 +25,17 @@ services:
     build: ./IIIFCurationViewer
     ports:
       - 'cvport:80'
+
+  curationmanager:
+    build: ./IIIFCurationManager
+    ports:
+      - 'cmport:80'
+
+  curationeditor:
+    build: ./IIIFCurationEditor
+    ports:
+      - 'ceport:80'
+
   loris:
     image: 'lorisimageserver/loris'
     ports:

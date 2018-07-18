@@ -6,7 +6,7 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
 * *if* Firebase is to be used
     * place a file `firebase-adminsdk.json` in jk/
     * uncomment the firebase config section in jk/config.ini
-    * place a modified `authFirebase.js` in cv/ and cf/
+    * place a modified `authFirebase.js` in cv/, cf/, cm/ and ce/
     * add the host part of `externalurl` to the authorized domains in your Firebase console
 * `$ ./setup.sh`
 * `$ docker-compose up --build`
@@ -19,7 +19,7 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
 
 ### Proxy config examples
 
-Let's assume you want to serve the bundle on `<your_host>/cp/...` and have therefore set `externalurl` in setup.sh to `<your_host>/cp` (no trailing slash). Proxy configurations then may look as follows:
+Let's assume you want to serve the bundle on `<your_host>/cp/...`, have therefore set `externalurl` in setup.sh to `<your_host>/cp` (no trailing slash) and set the `start_port` to 8001. Proxy configurations then may look as follows:
 
 #### Apache
 
@@ -27,10 +27,16 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...` and have there
         ProxyPassReverse "^/cp/curation/(.*)" "http://127.0.0.1:8001/$1"
         ProxyPassMatch "^/cp/ci/(.*)" "http://127.0.0.1:8002/$1"
         ProxyPassReverse "^/cp/ci/(.*)" "http://127.0.0.1:8002/$1"
-        ProxyPassMatch "^/cp/finder/(.*)" "http://127.0.0.1:8003/$1"
-        ProxyPassReverse "^/cp/finder/(.*)" "http://127.0.0.1:8003/$1"
-        ProxyPassMatch "^/cp/viewer/(.*)" "http://127.0.0.1:8004/$1"
-        ProxyPassReverse "^/cp/viewer/(.*)" "http://127.0.0.1:8004/$1"
+        ProxyPassMatch "^/cp/viewer/(.*)" "http://127.0.0.1:8003/$1"
+        ProxyPassReverse "^/cp/viewer/(.*)" "http://127.0.0.1:8003/$1"
+        ProxyPassMatch "^/cp/finder/(.*)" "http://127.0.0.1:8004/$1"
+        ProxyPassReverse "^/cp/finder/(.*)" "http://127.0.0.1:8004/$1"
+        ProxyPassMatch "^/cp/manager/(.*)" "http://127.0.0.1:8005/$1"
+        ProxyPassReverse "^/cp/manager/(.*)" "http://127.0.0.1:8005/$1"
+        ProxyPassMatch "^/cp/editor/(.*)" "http://127.0.0.1:8006/$1"
+        ProxyPassReverse "^/cp/editor/(.*)" "http://127.0.0.1:8006/$1"
+        ProxyPassMatch "^/cp/image/(.*)" "http://127.0.0.1:8007/$1"
+        ProxyPassReverse "^/cp/image/(.*)" "http://127.0.0.1:8007/$1"
 
 ##### Restricting access
 
@@ -63,9 +69,18 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...` and have there
         location /cp/ci/ {
             proxy_pass http://127.0.0.1:8002/;
         }
-        location /cp/finder/ {
+        location /cp/viewer/ {
             proxy_pass http://127.0.0.1:8003/;
         }
-        location /cp/viewer/ {
+        location /cp/finder/ {
             proxy_pass http://127.0.0.1:8004/;
+        }
+        location /cp/manager/ {
+            proxy_pass http://127.0.0.1:8005/;
+        }
+        location /cp/editor/ {
+            proxy_pass http://127.0.0.1:8006/;
+        }
+        location /cp/image/ {
+            proxy_pass http://127.0.0.1:8007/;
         }
