@@ -1,3 +1,4 @@
 .git
 .dockerignore
 config.ini
+firebase-adminsdk.json

@@ -9,6 +9,7 @@ services:
       - 'jkport:8000'
     volumes:
       - ./JSONkeeper/config.ini:/jsonkeeper/config.ini
+      - ./JSONkeeper/firebase-adminsdk.json:/jsonkeeper/firebase-adminsdk.json
 
   canvasindexer:
     build: ./Canvas-Indexer
@@ -26,6 +27,10 @@ services:
       - 'curation_platform_strtport'
     ports:
       - 'cfport:80'
+    volumes:
+      - ./IIIFCurationFinder/authFirebase.js:/usr/share/nginx/html/authFirebase.js
+      - ./IIIFCurationFinder/index.js:/usr/share/nginx/html/index.js
+      - ./IIIFCurationFinder/index.html:/usr/share/nginx/html/index.html
 
   curationviewer:
     build: ./IIIFCurationViewer
@@ -33,6 +38,10 @@ services:
       - 'curation_platform_strtport'
     ports:
       - 'cvport:80'
+    volumes:
+      - ./IIIFCurationViewer/authFirebase.js:/usr/share/nginx/html/authFirebase.js
+      - ./IIIFCurationViewer/index.js:/usr/share/nginx/html/index.js
+      - ./IIIFCurationViewer/index.html:/usr/share/nginx/html/index.html
 
   curationmanager:
     build: ./IIIFCurationManager
@@ -40,6 +49,10 @@ services:
       - 'curation_platform_strtport'
     ports:
       - 'cmport:80'
+    volumes:
+      - ./IIIFCurationManager/authFirebase.js:/usr/share/nginx/html/authFirebase.js
+      - ./IIIFCurationManager/index.js:/usr/share/nginx/html/index.js
+      - ./IIIFCurationManager/index.html:/usr/share/nginx/html/index.html
 
   curationeditor:
     build: ./IIIFCurationEditor
@@ -47,6 +60,10 @@ services:
       - 'curation_platform_strtport'
     ports:
       - 'ceport:80'
+    volumes:
+      - ./IIIFCurationEditor/authFirebase.js:/usr/share/nginx/html/authFirebase.js
+      - ./IIIFCurationEditor/index.js:/usr/share/nginx/html/index.js
+      - ./IIIFCurationEditor/index.html:/usr/share/nginx/html/index.html
 
   loris:
     image: 'lorisimageserver/loris'
