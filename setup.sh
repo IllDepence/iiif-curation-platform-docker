@@ -2,16 +2,16 @@
 
 # Configurate the external URL (without trailing slash) and start port number here
 # externalurl=http://136.187.82.133/cp
-externalurl=http://192.168.0.10/cp
+externalurl=http://192.168.0.158/cp
 
 start_port=9001
 
 jk_git_url="https://github.com/IllDepence/JSONkeeper.git"
 ci_git_url="https://github.com/IllDepence/Canvas-Indexer.git"
-cv_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationViewer_20180710.zip"
+cv_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationViewer_latest.zip"
 cf_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationFinder_20180710.zip"
-cm_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationManager_20180712.zip"
-ce_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationEditor_20180712.zip"
+cm_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationManager_latest.zip"
+ce_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationEditor_latest.zip"
 
 # NOTE: services are expected to be accessible at
 # - JSONkeeper: <externalurl>/curation/
@@ -104,6 +104,7 @@ sed -i -E "s/jsonKeeperEditorUrl: '.+'/jsonKeeperEditorUrl: '$exturlesc\/editor\
 
 # - - - - - Docker Compose - - - - -
 cp docker-compose.yml.dist docker-compose.yml
+sed -i -E "s/strtport/$start_port/" docker-compose.yml
 sed -i -E "s/jkport/$((start_port + 0))/" docker-compose.yml
 sed -i -E "s/ciport/$((start_port + 1))/" docker-compose.yml
 sed -i -E "s/cvport/$((start_port + 2))/" docker-compose.yml
@@ -111,5 +112,7 @@ sed -i -E "s/cfport/$((start_port + 3))/" docker-compose.yml
 sed -i -E "s/cmport/$((start_port + 4))/" docker-compose.yml
 sed -i -E "s/ceport/$((start_port + 5))/" docker-compose.yml
 sed -i -E "s/lport/$((start_port + 6))/" docker-compose.yml
+
+echo -n "curation_platform_$start_port" > proj_name
 
 ./reset.sh

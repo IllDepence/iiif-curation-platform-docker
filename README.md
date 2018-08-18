@@ -9,7 +9,7 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
     * place a modified `authFirebase.js` in cv/, cf/, cm/ and ce/
     * add the host part of `externalurl` to the authorized domains in your Firebase console
 * `$ ./setup.sh`
-* `$ docker-compose up --build`
+* `$ ./start.sh`
 
 ### General use
 

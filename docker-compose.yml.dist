@@ -3,6 +3,8 @@ version: '2'
 services:
   jsonkeeper:
     build: ./JSONkeeper
+    labels:
+      - 'curation_platform_strtport'
     ports:
       - 'jkport:8000'
     volumes:
@@ -10,6 +12,8 @@ services:
 
   canvasindexer:
     build: ./Canvas-Indexer
+    labels:
+      - 'curation_platform_strtport'
     ports:
       - 'ciport:8000'
     volumes:
@@ -18,26 +22,36 @@ services:
 
   curationfinder:
     build: ./IIIFCurationFinder
+    labels:
+      - 'curation_platform_strtport'
     ports:
       - 'cfport:80'
 
   curationviewer:
     build: ./IIIFCurationViewer
+    labels:
+      - 'curation_platform_strtport'
     ports:
       - 'cvport:80'
 
   curationmanager:
     build: ./IIIFCurationManager
+    labels:
+      - 'curation_platform_strtport'
     ports:
       - 'cmport:80'
 
   curationeditor:
     build: ./IIIFCurationEditor
+    labels:
+      - 'curation_platform_strtport'
     ports:
       - 'ceport:80'
 
   loris:
     image: 'lorisimageserver/loris'
+    labels:
+      - 'curation_platform_strtport'
     ports:
       - 'lport:5004'
     volumes:
