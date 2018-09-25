@@ -43,6 +43,18 @@ cp -rv ci/.dockerignore ci/* Canvas-Indexer
 sed -i -E "s/server_url =.+/server_url = $exturlesc\/curation/" JSONkeeper/config.ini
 sed -i -E "s/as_sources =.+/as_sources = $exturlesc\/curation\/as\/collection.json/" Canvas-Indexer/config.ini
 
+# check if a custom api path for JSONkeeper was defined
+sharp='#'
+api_line=`cat jk/config.ini | grep api_path | head -n 1`
+if [ -z "${api_line##*$sharp*}" ]; then
+    # default path
+    jk_api_path='api'
+else
+    # clean and save custom path
+    tmp_line=`echo $api_line | sed 's/.*api_path\s*=\s*//g'`
+    jk_api_path=`echo $tmp_line | sed 's/\s*$//g'`
+fi
+
 # - - - - - CV and CF - - - - -
 rm -rf IIIFCurationViewer
 rm -rf IIIFCurationFinder
@@ -66,8 +78,8 @@ rmdir cf_tmp_folder
 cp -v cv/.dockerignore cv/* IIIFCurationViewer
 cp -v cf/.dockerignore cf/* IIIFCurationFinder
 
-sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/api'/" IIIFCurationViewer/index.js
-sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/api'/" IIIFCurationFinder/index.js
+sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationViewer/index.js
+sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationFinder/index.js
 sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: '$exturlesc\/viewer\/'/" IIIFCurationFinder/index.js
 sed -i -E "s/searchEndpointUrl: '.+'/searchEndpointUrl: '$exturlesc\/index\/api'/" IIIFCurationFinder/index.js
 sed -i -E "s/facetsEndpointUrl: '.+'/facetsEndpointUrl: '$exturlesc\/index\/facets'/" IIIFCurationFinder/index.js
@@ -96,8 +108,8 @@ rmdir ce_tmp_folder
 cp -v cm/.dockerignore cm/* IIIFCurationManager
 cp -v ce/.dockerignore ce/* IIIFCurationEditor
 
-sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/api'/" IIIFCurationEditor/index.js
-sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/api'/" IIIFCurationManager/index.js
+sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationEditor/index.js
+sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationManager/index.js
 sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: '$exturlesc\/viewer\/'/" IIIFCurationManager/index.js
 sed -i -E "s/jsonKeeperEditorUrl: '.+'/jsonKeeperEditorUrl: '$exturlesc\/editor\/'/" IIIFCurationManager/index.js
 
