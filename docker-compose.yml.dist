@@ -8,6 +8,7 @@ services:
     ports:
       - 'jkport:8000'
     volumes:
+      - ./JSONkeeper/jsonkeeper/keep.db:/jsonkeeper/jsonkeeper/keep.db
       - ./JSONkeeper/config.ini:/jsonkeeper/config.ini
       - ./JSONkeeper/firebase-adminsdk.json:/jsonkeeper/firebase-adminsdk.json
 
@@ -18,6 +19,7 @@ services:
     ports:
       - 'ciport:8000'
     volumes:
+      - ./Canvas-Indexer/canvasindexer/index.db:/tmp/index.db
       - ./Canvas-Indexer/config.ini:/canvasindexer/config.ini
       - ./Canvas-Indexer/log.txt:/canvasindexer/log.txt
 
@@ -65,11 +67,13 @@ services:
       - ./IIIFCurationEditor/index.js:/usr/share/nginx/html/index.js
       - ./IIIFCurationEditor/index.html:/usr/share/nginx/html/index.html
 
-  loris:
-    image: 'lorisimageserver/loris'
-    labels:
-      - 'curation_platform_strtport'
-    ports:
-      - 'lport:5004'
-    volumes:
-      - ./loris/images:/opt/loris/tests/img
+  # # uncomment below block to include a loris image server into the docker-compose
+  # # setup
+  # loris:
+  #   image: 'lorisimageserver/loris'
+  #   labels:
+  #     - 'curation_platform_strtport'
+  #   ports:
+  #     - 'lport:5004'
+  #   volumes:
+  #     - ./loris/images:/opt/loris/tests/img

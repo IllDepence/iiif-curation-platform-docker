@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Configurate the external URL (without trailing slash) and start port number here
-# externalurl=http://136.187.82.133/cp
 externalurl=http://192.168.0.158/cp
 
 start_port=9001
@@ -39,8 +38,8 @@ rm -rf JSONkeeper
 rm -rf Canvas-Indexer
 git clone $jk_git_url
 git clone $ci_git_url
-cp -v jk/.dockerignore jk/* JSONkeeper
-cp -v ci/.dockerignore ci/* Canvas-Indexer
+cp -rv jk/.dockerignore jk/* JSONkeeper
+cp -rv ci/.dockerignore ci/* Canvas-Indexer
 sed -i -E "s/server_url =.+/server_url = $exturlesc\/curation/" JSONkeeper/config.ini
 sed -i -E "s/as_sources =.+/as_sources = $exturlesc\/curation\/as\/collection.json/" Canvas-Indexer/config.ini
 
