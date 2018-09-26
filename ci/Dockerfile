@@ -5,7 +5,11 @@ ENV INSTALL_PATH /canvasindexer
 RUN mkdir -p $INSTALL_PATH
 WORKDIR $INSTALL_PATH
 
-RUN apk add --no-cache python3 && \
+RUN apk add --no-cache gcc && \
+    apk add --no-cache build-base && \
+    apk add --no-cache python3 && \
+    apk add --no-cache python3-dev && \
+    apk add --no-cache py3-psycopg2 && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools && \

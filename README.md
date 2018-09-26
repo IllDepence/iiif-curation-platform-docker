@@ -1,4 +1,16 @@
-Docker setup for running all parts of the [IIIF Curation Platform](http://codh.rois.ac.jp/iiif-curation-platform/).
+Docker setup for running all parts of the [IIIF Curation Platform](http://codh.rois.ac.jp/iiif-curation-platform/) (ICP).
+
+# Overview
+
+This repository contains scripts and configuration files for setting up an ICP instance with Docker containers.  
+To use the platform *within a local network*, it is sufficient to set the value of `externalurl` in the file `setup.sh` to your IP within the network and then execute `./setup.sh` followed by `./start.sh`.  In order to host a remotely accessible instance you need to know how to configure proxy settings of a web server (see details below).  
+Note that IIIF Curation Viewer, IIIF Curation Editor and JSONkeeper are usable out of the box. In order to make use of IIIF Curation Finder, IIIF Curation Manager and Canvas Indexer you have to configure Firebase authentication (see section *First use* below).
+
+### Functionality
+
+The setup script `setup.sh` retrieves all of the ICP components and configures them so that they work together nicely and can be started with Docker. To do so it copies over files from the folders `ce`, `cf`, `ci`, `cm`, `cv` and `jk` and then edits them in their respective destinations (folders `IIIFCurationViewer`, `JSONkeeper`, etc.). This means that you can either make configuration changes in files in `ce`, `cf`, ... and then run `setup.sh`, or you first run the script and then edit configuration files in `IIIFCurationViewer`, `JSONkeeper`, ... (the latter is preferred).
+
+# Use
 
 ### First use
 
@@ -13,9 +25,9 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
 
 ### General use
 
-* `./setup.sh`: reset everything (application code, configuration, containers)
-* `./reset.sh`: reset containers (i.e application storage, but not configuration)
-* `docker restart <container_id>`: make configuration changes take effect
+* `$ ./setup.sh`: reset everything (application code, configuration, containers)
+* `$ ./reset.sh`: reset containers (i.e application storage, but not configuration) (does not work with older Docker versions; verified with version 17.12.1)
+* `$ docker restart <container_id>`: make configuration changes take effect
 
 ### Proxy config examples
 
@@ -40,14 +52,14 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...`, have therefor
 
 ##### Restricting access
 
-* run `docker network inspect curation-framework-docker`<sup>[1]</sup> while the containers are running
+* run `docker network inspect curationplatform9001_default`<sup>[2]</sup> while the containers are running
 * note the value of `Subnet` (for the network, not a single container)
 * if not already existing, generate a htpasswd file (e.g.: `sudo htpasswd -c /etc/apache2/.htpasswd curt`)
 * configure Apache as shown below
     * replace `<subnet_value>` with the value you got in the first step
     * replace `<path_to_htpasswd_file>` with the path to your htpasswd file
 
-[1] the network name may differ if you renamed the folder in which this repository is placed
+[2] the network name may differ. run `docker network ls` to see all networks.
 
 ‌
 
@@ -84,3 +96,11 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...`, have therefor
         location /cp/image/ {
             proxy_pass http://127.0.0.1:8007/;
         }
+
+# Component specific notes
+
+### JSONkeeper & Canvas Indexer
+
+#### Database
+
+JSONkeeper and Canvas Indexer are configured to use a SQLite database by default. You can use other types of databases by just changing the configuration. The Docker containers are set up to support SQLite and PostgreSQL out of the box. If you use another type of database, you might need to add installation instructions for an additional Python database driver in the respective `Dockerfile` files (see [SQLAlchemy supported databases](http://docs.sqlalchemy.org/en/latest/core/engines.html#supported-databases)).
