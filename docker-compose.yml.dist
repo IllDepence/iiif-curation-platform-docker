@@ -23,49 +23,25 @@ services:
       - ./Canvas-Indexer/config.ini:/canvasindexer/config.ini
       - ./Canvas-Indexer/log.txt:/canvasindexer/log.txt
 
-  curationfinder:
-    build: ./IIIFCurationFinder
+  frontend:
+    build: ./Frontend
     labels:
       - 'curation_platform_strtport'
     ports:
-      - 'cfport:80'
+      - 'feport:80'
     volumes:
-      - ./IIIFCurationFinder/authFirebase.js:/usr/share/nginx/html/authFirebase.js
-      - ./IIIFCurationFinder/index.js:/usr/share/nginx/html/index.js
-      - ./IIIFCurationFinder/index.html:/usr/share/nginx/html/index.html
-
-  curationviewer:
-    build: ./IIIFCurationViewer
-    labels:
-      - 'curation_platform_strtport'
-    ports:
-      - 'cvport:80'
-    volumes:
-      - ./IIIFCurationViewer/authFirebase.js:/usr/share/nginx/html/authFirebase.js
-      - ./IIIFCurationViewer/index.js:/usr/share/nginx/html/index.js
-      - ./IIIFCurationViewer/index.html:/usr/share/nginx/html/index.html
-
-  curationmanager:
-    build: ./IIIFCurationManager
-    labels:
-      - 'curation_platform_strtport'
-    ports:
-      - 'cmport:80'
-    volumes:
-      - ./IIIFCurationManager/authFirebase.js:/usr/share/nginx/html/authFirebase.js
-      - ./IIIFCurationManager/index.js:/usr/share/nginx/html/index.js
-      - ./IIIFCurationManager/index.html:/usr/share/nginx/html/index.html
-
-  curationeditor:
-    build: ./IIIFCurationEditor
-    labels:
-      - 'curation_platform_strtport'
-    ports:
-      - 'ceport:80'
-    volumes:
-      - ./IIIFCurationEditor/authFirebase.js:/usr/share/nginx/html/authFirebase.js
-      - ./IIIFCurationEditor/index.js:/usr/share/nginx/html/index.js
-      - ./IIIFCurationEditor/index.html:/usr/share/nginx/html/index.html
+      - ./Frontend/IIIFCurationFinder/authFirebase.js:/usr/share/nginx/html/finder/authFirebase.js
+      - ./Frontend/IIIFCurationFinder/index.js:/usr/share/nginx/html/finder/index.js
+      - ./Frontend/IIIFCurationFinder/index.html:/usr/share/nginx/html/finder/index.html
+      - ./Frontend/IIIFCurationViewer/authFirebase.js:/usr/share/nginx/html/viewer/authFirebase.js
+      - ./Frontend/IIIFCurationViewer/index.js:/usr/share/nginx/html/viewer/index.js
+      - ./Frontend/IIIFCurationViewer/index.html:/usr/share/nginx/html/viewer/index.html
+      - ./Frontend/IIIFCurationManager/authFirebase.js:/usr/share/nginx/html/manager/authFirebase.js
+      - ./Frontend/IIIFCurationManager/index.js:/usr/share/nginx/html/manager/index.js
+      - ./Frontend/IIIFCurationManager/index.html:/usr/share/nginx/html/manager/index.html
+      - ./Frontend/IIIFCurationEditor/authFirebase.js:/usr/share/nginx/html/editor/authFirebase.js
+      - ./Frontend/IIIFCurationEditor/index.js:/usr/share/nginx/html/editor/index.js
+      - ./Frontend/IIIFCurationEditor/index.html:/usr/share/nginx/html/editor/index.html
 
   # # uncomment below block to include a loris image server into the docker-compose
   # # setup

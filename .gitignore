@@ -1,12 +1,12 @@
 *.swp
 Canvas-Indexer
 JSONkeeper
-IIIFCurationViewer
-IIIFCurationFinder
-IIIFCurationManager
-IIIFCurationEditor
 cv/IIIFCurationViewer
 cf/IIIFCurationFinder
+Frontend/IIIFCurationViewer
+Frontend/IIIFCurationFinder
+Frontend/IIIFCurationManager
+Frontend/IIIFCurationEditor
 jk/firebase-adminsdk.json
 cv/authFirebase.js
 cf/authFirebase.js

@@ -24,11 +24,11 @@ ce_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationEditor_latest.z
 # and will be exposed by docker at
 # - JSONkeeper: http://127.0.0.1:<start_port>
 # - Canvas Indexer: http://127.0.0.1:<start_port+1>
-# - Curation Viewer: http://127.0.0.1:<start_port+2>
-# - Curation Finder: http://127.0.0.1:<start_port+3>
-# - Curation Manager: http://127.0.0.1:<start_port+4>
-# - Curation Editor: http://127.0.0.1:<start_port+5>
-# - Loris: http://127.0.0.1:<start_port+6>
+# - Curation Viewer: http://127.0.0.1:<start_port+2>/viewer
+# - Curation Finder: http://127.0.0.1:<start_port+2>/finder
+# - Curation Manager: http://127.0.0.1:<start_port+2>/manager
+# - Curation Editor: http://127.0.0.1:<start_port+2>/editor
+# - Loris: http://127.0.0.1:<start_port+3>
 # see README.md for a proxy configuration examples
 
 exturlesc="${externalurl//\//\\/}"
@@ -56,8 +56,8 @@ else
 fi
 
 # - - - - - CV and CF - - - - -
-rm -rf IIIFCurationViewer
-rm -rf IIIFCurationFinder
+rm -rf Frontend/IIIFCurationViewer
+rm -rf Frontend/IIIFCurationFinder
 
 curl $cv_zip_url -o cv_tmp.zip
 mkdir cv_tmp_folder
@@ -86,8 +86,8 @@ sed -i -E "s/facetsEndpointUrl: '.+'/facetsEndpointUrl: '$exturlesc\/index\/face
 sed -i -E "s/redirectUrl: '.+'/redirectUrl: '$exturlesc\/viewer\/'/" IIIFCurationFinder/exportJsonKeeper.js
 
 # - - - - - CM and CE - - - - -
-rm -rf IIIFCurationManager
-rm -rf IIIFCurationEditor
+rm -rf Frontend/IIIFCurationManager
+rm -rf Frontend/IIIFCurationEditor
 
 curl $cm_zip_url -o cm_tmp.zip
 mkdir cm_tmp_folder
@@ -113,17 +113,24 @@ sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/cur
 sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: '$exturlesc\/viewer\/'/" IIIFCurationManager/index.js
 sed -i -E "s/jsonKeeperEditorUrl: '.+'/jsonKeeperEditorUrl: '$exturlesc\/editor\/'/" IIIFCurationManager/index.js
 
+# - - - - - move frontent components - - - - -
+# (so that the frontend dockerfile is be able to access the folders)
+mv IIIFCurationViewer Frontend/
+mv IIIFCurationFinder Frontend/
+mv IIIFCurationManager Frontend/
+mv IIIFCurationEditor Frontend/
+
 # - - - - - Docker Compose - - - - -
 cp docker-compose.yml.dist docker-compose.yml
 sed -i -E "s/strtport/$start_port/" docker-compose.yml
 sed -i -E "s/jkport/$((start_port + 0))/" docker-compose.yml
 sed -i -E "s/ciport/$((start_port + 1))/" docker-compose.yml
-sed -i -E "s/cvport/$((start_port + 2))/" docker-compose.yml
-sed -i -E "s/cfport/$((start_port + 3))/" docker-compose.yml
-sed -i -E "s/cmport/$((start_port + 4))/" docker-compose.yml
-sed -i -E "s/ceport/$((start_port + 5))/" docker-compose.yml
-sed -i -E "s/lport/$((start_port + 6))/" docker-compose.yml
+sed -i -E "s/feport/$((start_port + 2))/" docker-compose.yml
+sed -i -E "s/lport/$((start_port + 3))/" docker-compose.yml
 
 echo -n "curation_platform_$start_port" > proj_name
 
 ./reset.sh
+
+docker-compose --project-name `cat ./proj_name` build
+docker-compose --project-name `cat ./proj_name` up --build --no-start
