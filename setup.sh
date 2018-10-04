@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configurate the external URL (without trailing slash) and start port number here
-externalurl=http://192.168.0.158/cp
+externalurl=http://10.126.105.125/cp
 
 start_port=9001
 
@@ -11,6 +11,7 @@ cv_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationViewer_latest.z
 cf_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationFinder_latest.zip"
 cm_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationManager_latest.zip"
 ce_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationEditor_latest.zip"
+cp_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationPlayer_latest.zip"
 
 # NOTE: services are expected to be accessible at
 # - JSONkeeper: <externalurl>/curation/
@@ -19,6 +20,7 @@ ce_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationEditor_latest.z
 # - Curation Finder: <externalurl>/finder/
 # - Curation Manager: <externalurl>/manager/
 # - Curation Editor: <externalurl>/editor/
+# - Curation Player: <externalurl>/player/
 # - Loris: <externalurl>/image/
 # from outside (web/intranet/...)
 # and will be exposed by docker at
@@ -28,6 +30,7 @@ ce_zip_url="http://codh.rois.ac.jp/software/download/IIIFCurationEditor_latest.z
 # - Curation Finder: http://127.0.0.1:<start_port+2>/finder
 # - Curation Manager: http://127.0.0.1:<start_port+2>/manager
 # - Curation Editor: http://127.0.0.1:<start_port+2>/editor
+# - Curation Player: http://127.0.0.1:<start_port+2>/player
 # - Loris: http://127.0.0.1:<start_port+3>
 # see README.md for a proxy configuration examples
 
@@ -85,6 +88,9 @@ sed -i -E "s/searchEndpointUrl: '.+'/searchEndpointUrl: '$exturlesc\/index\/api'
 sed -i -E "s/facetsEndpointUrl: '.+'/facetsEndpointUrl: '$exturlesc\/index\/facets'/" IIIFCurationFinder/index.js
 sed -i -E "s/redirectUrl: '.+'/redirectUrl: '$exturlesc\/viewer\/'/" IIIFCurationFinder/exportJsonKeeper.js
 
+mv IIIFCurationViewer Frontend/
+mv IIIFCurationFinder Frontend/
+
 # - - - - - CM and CE - - - - -
 rm -rf Frontend/IIIFCurationManager
 rm -rf Frontend/IIIFCurationEditor
@@ -113,12 +119,25 @@ sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/cur
 sed -i -E "s/curationViewerUrl: '.+'/curationViewerUrl: '$exturlesc\/viewer\/'/" IIIFCurationManager/index.js
 sed -i -E "s/jsonKeeperEditorUrl: '.+'/jsonKeeperEditorUrl: '$exturlesc\/editor\/'/" IIIFCurationManager/index.js
 
-# - - - - - move frontent components - - - - -
-# (so that the frontend dockerfile is be able to access the folders)
-mv IIIFCurationViewer Frontend/
-mv IIIFCurationFinder Frontend/
 mv IIIFCurationManager Frontend/
 mv IIIFCurationEditor Frontend/
+
+# - - - - - CP - - - - -
+rm -rf Frontend/IIIFCurationPlayer
+
+curl $cp_zip_url -o cp_tmp.zip
+mkdir cp_tmp_folder
+unzip -q -d cp_tmp_folder cp_tmp.zip
+rm cp_tmp.zip
+cpunzipped=`ls cp_tmp_folder`
+mv -v "cp_tmp_folder/${cpunzipped}" IIIFCurationPlayer
+rmdir cp_tmp_folder
+
+cp -v cp/.dockerignore IIIFCurationPlayer
+
+sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationPlayer/index.js
+
+mv IIIFCurationPlayer Frontend/
 
 # - - - - - Docker Compose - - - - -
 cp docker-compose.yml.dist docker-compose.yml
@@ -132,5 +151,4 @@ echo -n "curation_platform_$start_port" > proj_name
 
 ./reset.sh
 
-docker-compose --project-name `cat ./proj_name` build
 docker-compose --project-name `cat ./proj_name` up --build --no-start

@@ -42,6 +42,8 @@ services:
       - ./Frontend/IIIFCurationEditor/authFirebase.js:/usr/share/nginx/html/editor/authFirebase.js
       - ./Frontend/IIIFCurationEditor/index.js:/usr/share/nginx/html/editor/index.js
       - ./Frontend/IIIFCurationEditor/index.html:/usr/share/nginx/html/editor/index.html
+      - ./Frontend/IIIFCurationPlayer/index.js:/usr/share/nginx/html/player/index.js
+      - ./Frontend/IIIFCurationPlayer/index.html:/usr/share/nginx/html/player/index.html
 
   # # uncomment below block to include a loris image server into the docker-compose
   # # setup

@@ -8,7 +8,7 @@ Note that IIIF Curation Viewer, IIIF Curation Editor and JSONkeeper are usable o
 
 ### Functionality
 
-The setup script `setup.sh` retrieves all of the ICP components and configures them so that they work together nicely and can be started with Docker. To do so it copies over files from the folders `ce`, `cf`, `ci`, `cm`, `cv` and `jk` and then edits them in their respective destinations (folders `Frontent/IIIFCurationViewer`, `JSONkeeper`, etc.). This means that you can either make configuration changes in files in `ce`, `cf`, ... and then run `setup.sh`, or you first run the script and then edit configuration files in `Frontend/IIIFCurationViewer`, `JSONkeeper`, ... (the latter is preferred).
+The setup script `setup.sh` retrieves all of the ICP components and configures them so that they work together nicely and can be started with Docker. To do so it copies over files from the folders `ce`, `cf`, `ci`, `cm`, `cp`, `cv` and `jk` and then edits them in their respective destinations (folders `Frontent/IIIFCurationViewer`, `JSONkeeper`, etc.). This means that you can either make configuration changes in files in `ce`, `cf`, ... and then run `setup.sh`, or you first run the script and then edit configuration files in `Frontend/IIIFCurationViewer`, `JSONkeeper`, ... (the latter is preferred).
 
 # Use
 
@@ -35,20 +35,30 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...`, have therefor
 
 #### Apache
 
+        # JSONkeeper
         ProxyPassMatch "^/cp/curation/(.*)" "http://127.0.0.1:8001/$1"
         ProxyPassReverse "^/cp/curation/(.*)" "http://127.0.0.1:8001/$1"
+        # Canvas Indexer
         ProxyPassMatch "^/cp/index/(.*)" "http://127.0.0.1:8002/$1"
         ProxyPassReverse "^/cp/index/(.*)" "http://127.0.0.1:8002/$1"
+        # IIIF Curation Viewer
         ProxyPassMatch "^/cp/viewer/(.*)" "http://127.0.0.1:8003/viewer/$1"
         ProxyPassReverse "^/cp/viewer/(.*)" "http://127.0.0.1:8003/viewer/$1"
+        # IIIF Curation Finder
         ProxyPassMatch "^/cp/finder/(.*)" "http://127.0.0.1:8003/finder/$1"
         ProxyPassReverse "^/cp/finder/(.*)" "http://127.0.0.1:8003/finder/$1"
+        # IIIF Curation Manager
         ProxyPassMatch "^/cp/manager/(.*)" "http://127.0.0.1:8003/manager/$1"
         ProxyPassReverse "^/cp/manager/(.*)" "http://127.0.0.1:8003/manager/$1"
+        # IIIF Curation Editor
         ProxyPassMatch "^/cp/editor/(.*)" "http://127.0.0.1:8003/editor/$1"
         ProxyPassReverse "^/cp/editor/(.*)" "http://127.0.0.1:8003/editor/$1"
-        ProxyPassMatch "^/cp/image/(.*)" "http://127.0.0.1:8004/$1"
-        ProxyPassReverse "^/cp/image/(.*)" "http://127.0.0.1:8004/$1"
+        # IIIF Curation Editor
+        ProxyPassMatch "^/cp/player/(.*)" "http://127.0.0.1:8003/player/$1"
+        ProxyPassReverse "^/cp/player/(.*)" "http://127.0.0.1:8003/player/$1"
+        # # Loris (deactivated by default)
+        # ProxyPassMatch "^/cp/image/(.*)" "http://127.0.0.1:8004/$1"
+        # ProxyPassReverse "^/cp/image/(.*)" "http://127.0.0.1:8004/$1"
 
 ##### Restricting access
 
@@ -75,27 +85,38 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...`, have therefor
 
 #### Nginx
 
+        # JSONkeeper
         location /cp/curation/ {
             proxy_pass http://127.0.0.1:8001/;
         }
+        # Canvas Indexer
         location /cp/index/ {
             proxy_pass http://127.0.0.1:8002/;
         }
+        # IIIF Curation Viewer
         location /cp/viewer/ {
             proxy_pass http://127.0.0.1:8003/viewer/;
         }
+        # IIIF Curation Finder
         location /cp/finder/ {
             proxy_pass http://127.0.0.1:8003/finder/;
         }
+        # IIIF Curation Manager
         location /cp/manager/ {
             proxy_pass http://127.0.0.1:8003/manager/;
         }
+        # IIIF Curation Editor
         location /cp/editor/ {
             proxy_pass http://127.0.0.1:8003/editor/;
         }
-        location /cp/image/ {
-            proxy_pass http://127.0.0.1:8004/;
+        # IIIF Curation Player
+        location /cp/player/ {
+            proxy_pass http://127.0.0.1:8003/player/;
         }
+        # # Loris (deactivated by default)
+        # location /cp/image/ {
+        #     proxy_pass http://127.0.0.1:8004/;
+        # }
 
 # Component specific notes
 
