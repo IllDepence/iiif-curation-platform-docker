@@ -21,7 +21,6 @@ services:
     volumes:
       - ./Canvas-Indexer/canvasindexer/index.db:/tmp/index.db
       - ./Canvas-Indexer/config.ini:/canvasindexer/config.ini
-      - ./Canvas-Indexer/log.txt:/canvasindexer/log.txt
 
   frontend:
     build: ./Frontend

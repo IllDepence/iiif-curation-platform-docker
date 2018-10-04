@@ -27,7 +27,7 @@ The setup script `setup.sh` retrieves all of the ICP components and configures t
 
 * `$ ./start.sh`: start the ICP
 * `$ ./stop.sh`: stop the ICP
-* `$ ./show_logs.sh`: output ICP logs to the terminal
+* `$ ./view_logs.sh`: output ICP logs to the terminal
 * `$ ./setup.sh`: reset everything (application code, configuration, containers)
 * `$ ./reset.sh`: reset containers (i.e application storage, but not configuration) (does not work with older Docker versions; verified with version 17.12.1)
 * `$ docker restart <container_id>`: make configuration changes take effect
