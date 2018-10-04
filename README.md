@@ -4,11 +4,11 @@ Docker setup for running all parts of the [IIIF Curation Platform](http://codh.r
 
 This repository contains scripts and configuration files for setting up an ICP instance with Docker containers.  
 To use the platform *within a local network*, it is sufficient to set the value of `externalurl` in the file `setup.sh` to your IP within the network and then execute `./setup.sh` followed by `./start.sh`.  In order to host a remotely accessible instance you need to know how to configure proxy settings of a web server (see details below).  
-Note that IIIF Curation Viewer, IIIF Curation Editor and JSONkeeper are usable out of the box. In order to make use of IIIF Curation Finder, IIIF Curation Manager and Canvas Indexer you have to configure Firebase authentication (see section *First use* below).
+Note that IIIF Curation Viewer, IIIF Curation Editor, IIIF Curation Player and JSONkeeper are usable out of the box. In order to make use of IIIF Curation Finder, IIIF Curation Manager and Canvas Indexer you have to configure Firebase authentication (see section *First use* below).
 
 ### Functionality
 
-The setup script `setup.sh` retrieves all of the ICP components and configures them so that they work together nicely and can be started with Docker. To do so it copies over files from the folders `ce`, `cf`, `ci`, `cm`, `cp`, `cv` and `jk` and then edits them in their respective destinations (folders `Frontent/IIIFCurationViewer`, `JSONkeeper`, etc.). This means that you can either make configuration changes in files in `ce`, `cf`, ... and then run `setup.sh`, or you first run the script and then edit configuration files in `Frontend/IIIFCurationViewer`, `JSONkeeper`, ... (the latter is preferred).
+The setup script `setup.sh` retrieves all of the ICP components and configures them so that they work together nicely and can be started with Docker. To do so it copies over files from the `setup` folder and then edits them in their respective destinations (folders `Frontent/IIIFCurationViewer`, `JSONkeeper`, etc.). This means that you can either make configuration changes in files in the `setup` folder and then run `setup.sh`, or you first run the script and then edit configuration files in `Frontend/IIIFCurationViewer`, `JSONkeeper`, ... (the latter is preferred).
 
 # Use
 
@@ -16,15 +16,18 @@ The setup script `setup.sh` retrieves all of the ICP components and configures t
 
 * in setup.sh, set the value of `externalurl` and `start_port`
 * *if* Firebase is to be used
-    * place a file `firebase-adminsdk.json` in jk/
-    * uncomment the firebase config section in jk/config.ini
-    * place a modified `authFirebase.js` in cv/, cf/, cm/ and ce/
+    * place a file `firebase-adminsdk.json` in setup/jk/
+    * uncomment the firebase config section in setup/jk/config.ini
+    * place a modified `authFirebase.js` in setup/cv/, setup/cf/, setup/cm/ and setup/ce/
     * add the host part of `externalurl` to the authorized domains in your Firebase console
 * `$ ./setup.sh`
 * `$ ./start.sh`
 
 ### General use
 
+* `$ ./start.sh`: start the ICP
+* `$ ./stop.sh`: stop the ICP
+* `$ ./show_logs.sh`: output ICP logs to the terminal
 * `$ ./setup.sh`: reset everything (application code, configuration, containers)
 * `$ ./reset.sh`: reset containers (i.e application storage, but not configuration) (does not work with older Docker versions; verified with version 17.12.1)
 * `$ docker restart <container_id>`: make configuration changes take effect

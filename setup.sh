@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configurate the external URL (without trailing slash) and start port number here
-externalurl=http://10.126.105.125/cp
+externalurl=http://192.168.0.158/cp
 
 start_port=9001
 
@@ -41,14 +41,14 @@ rm -rf JSONkeeper
 rm -rf Canvas-Indexer
 git clone $jk_git_url
 git clone $ci_git_url
-cp -rv jk/.dockerignore jk/* JSONkeeper
-cp -rv ci/.dockerignore ci/* Canvas-Indexer
+cp -rv setup/jk/.dockerignore setup/jk/* JSONkeeper
+cp -rv setup/ci/.dockerignore setup/ci/* Canvas-Indexer
 sed -i -E "s/server_url =.+/server_url = $exturlesc\/curation/" JSONkeeper/config.ini
 sed -i -E "s/as_sources =.+/as_sources = $exturlesc\/curation\/as\/collection.json/" Canvas-Indexer/config.ini
 
 # check if a custom api path for JSONkeeper was defined
 sharp='#'
-api_line=`cat jk/config.ini | grep api_path | head -n 1`
+api_line=`cat setup/jk/config.ini | grep api_path | head -n 1`
 if [ -z "${api_line##*$sharp*}" ]; then
     # default path
     jk_api_path='api'
@@ -78,8 +78,8 @@ cfunzipped=`ls cf_tmp_folder`
 mv -v "cf_tmp_folder/${cfunzipped}" IIIFCurationFinder
 rmdir cf_tmp_folder
 
-cp -v cv/.dockerignore cv/* IIIFCurationViewer
-cp -v cf/.dockerignore cf/* IIIFCurationFinder
+cp -v setup/cv/.dockerignore setup/cv/* IIIFCurationViewer
+cp -v setup/cf/.dockerignore setup/cf/* IIIFCurationFinder
 
 sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationViewer/index.js
 sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationFinder/index.js
@@ -111,8 +111,8 @@ ceunzipped=`ls ce_tmp_folder`
 mv -v "ce_tmp_folder/${ceunzipped}" IIIFCurationEditor
 rmdir ce_tmp_folder
 
-cp -v cm/.dockerignore cm/* IIIFCurationManager
-cp -v ce/.dockerignore ce/* IIIFCurationEditor
+cp -v setup/cm/.dockerignore setup/cm/* IIIFCurationManager
+cp -v setup/ce/.dockerignore setup/ce/* IIIFCurationEditor
 
 sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationEditor/index.js
 sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationManager/index.js
@@ -133,7 +133,7 @@ cpunzipped=`ls cp_tmp_folder`
 mv -v "cp_tmp_folder/${cpunzipped}" IIIFCurationPlayer
 rmdir cp_tmp_folder
 
-cp -v cp/.dockerignore IIIFCurationPlayer
+cp -v setup/cp/.dockerignore IIIFCurationPlayer
 
 sed -i -E "s/curationJsonExportUrl: '.+'/curationJsonExportUrl: '$exturlesc\/curation\/$jk_api_path'/" IIIFCurationPlayer/index.js
 
