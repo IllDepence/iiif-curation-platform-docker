@@ -15,10 +15,10 @@ The setup script `setup.sh` retrieves all of the ICP components and configures t
 ### First use
 
 * in setup.sh, set the value of `externalurl` and `start_port`
-* *if* Firebase is to be used
-    * place a file `firebase-adminsdk.json` in setup/jk/
-    * uncomment the firebase config section in setup/jk/config.ini
-    * place a modified `authFirebase.js` in setup/cv/, setup/cf/, setup/cm/ and setup/ce/
+* *if* [Firebase](https://firebase.google.com/) is to be used
+    * place a [Firebase service account key file](https://firebase.google.com/docs/admin/setup#add_firebase_to_your_app) named `firebase-adminsdk.json` in `setup/jk/`
+    * uncomment the `[firebase]` config section in `setup/jk/config.ini`
+    * place a modified `authFirebase.js` in `setup/cv/`, `setup/cf/`, `setup/cm/` and `setup/ce/`
     * add the host part of `externalurl` to the authorized domains in your Firebase console
 * `$ ./setup.sh`
 * `$ ./start.sh`
