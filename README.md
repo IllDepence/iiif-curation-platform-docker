@@ -1,4 +1,4 @@
-Docker setup for running all parts of the [IIIF Curation Platform](http://codh.rois.ac.jp/iiif-curation-platform/) (ICP).
+Docker setup for running all components of the [IIIF Curation Platform](http://codh.rois.ac.jp/iiif-curation-platform/) (ICP).
 
 # Overview
 
