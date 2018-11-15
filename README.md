@@ -18,7 +18,8 @@ The setup script `setup.sh` retrieves all of the ICP components and configures t
 * *if* [Firebase](https://firebase.google.com/) is to be used
     * place a [Firebase service account key file](https://firebase.google.com/docs/admin/setup#add_firebase_to_your_app) named `firebase-adminsdk.json` in `setup/jk/`
     * uncomment the `[firebase]` config section in `setup/jk/config.ini`
-    * place a modified `authFirebase.js` in `setup/cv/`, `setup/cf/`, `setup/cm/` and `setup/ce/`
+    * place a modified `authFirebase.js` in `setup/cv/`, `setup/cf/`, `setup/cm/` and `setup/ce/`  
+      **note**: each of abovementioned services needs a distinct `authFirebase.js` file (you can run `$ ./setup.sh` once, obtain them from the respective `Frontend/IIIFCuration*/` folder, edit the contents and then place each in it's respective `setup/c*` folder)
     * add the host part of `externalurl` to the authorized domains in your Firebase console
 * `$ ./setup.sh`
 * `$ ./start.sh`
@@ -56,7 +57,7 @@ Let's assume you want to serve the bundle on `<your_host>/cp/...`, have therefor
         # IIIF Curation Editor
         ProxyPassMatch "^/cp/editor/(.*)" "http://127.0.0.1:8003/editor/$1"
         ProxyPassReverse "^/cp/editor/(.*)" "http://127.0.0.1:8003/editor/$1"
-        # IIIF Curation Editor
+        # IIIF Curation Player
         ProxyPassMatch "^/cp/player/(.*)" "http://127.0.0.1:8003/player/$1"
         ProxyPassReverse "^/cp/player/(.*)" "http://127.0.0.1:8003/player/$1"
         # # Loris (deactivated by default)
