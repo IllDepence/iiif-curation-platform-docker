@@ -10,6 +10,7 @@ services:
     volumes:
       - ./JSONkeeper/jsonkeeper/keep.db:/jsonkeeper/jsonkeeper/keep.db
       - ./JSONkeeper/config.ini:/jsonkeeper/config.ini
+      - ./JSONkeeper/gunicorn_config.py:/jsonkeeper/gunicorn_config.py
       - ./JSONkeeper/firebase-adminsdk.json:/jsonkeeper/firebase-adminsdk.json
 
   canvasindexer:
@@ -20,6 +21,7 @@ services:
       - 'ciport:8000'
     volumes:
       - ./Canvas-Indexer/canvasindexer/index.db:/tmp/index.db
+      - ./Canvas-Indexer/gunicorn_config.py:/canvasindexer/gunicorn_config.py
       - ./Canvas-Indexer/config.ini:/canvasindexer/config.ini
 
   frontend:

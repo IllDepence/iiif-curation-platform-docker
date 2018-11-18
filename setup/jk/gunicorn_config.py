@@ -4,3 +4,5 @@ pidfile = "/tmp/gunicorn.pid"
 
 accesslog = "-"
 errorlog = "-"
+
+timeout = 60
